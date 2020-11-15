@@ -184,11 +184,17 @@ DEP是一组硬件和软件技术，它们对内存执行附加检查，以帮�
 >
 > 软件下载：https://www.exploit-db.com/apps/959f770895133edc4cf65a4a02d12da8-syncbreezeent_setup_v10.0.28.exe
 >
-> 文中的脚本代码最先开始使用的python3，但是后面发现了字符传输的问题，后面部分又改成了python2，但是转换问题不大，这里推荐你最先开始就使用python2，这样会避免一些错误问题的发生。
+> 下面出现的脚本代码会有些问题，我最先开始使用的python3，但是后面发现了字符传输的问题，后面部分又改成了python2，但是转换问题不大，这里推荐你最先开始就使用python2，这样会避免一些错误问题的发生。原文中都是使用的python2，你只要能理解就可以自己写出来。
 
 ### HTTP模糊测试
 
-目前Sync Breeze 的服务器是win7，然后在kali上面访问登陆界面。
+Sync Breeze安装之后，记得设置一下，Tools - Advanced Options，选择Server，把Enable Web Server on Po勾选上：
+
+![image.png](https://cdn.nlark.com/yuque/0/2020/png/2398693/1605403365235-98913607-0b9e-4dd6-8a16-c3ceae27170b.png)
+
+![image.png](https://cdn.nlark.com/yuque/0/2020/png/2398693/1605403415107-c2ccd797-9332-4b2b-82b7-176fa4768f7f.png)
+
+目前Sync Breeze 的服务器是win7，然后在kali上面访问登陆界面，如果打不开，可能是因为你win7开了防火墙，自己去关一下。
 
 ![image.png](https://cdn.nlark.com/yuque/0/2020/png/2398693/1605343748335-12bfbb19-21a9-4b70-94bf-5c54b032bf16.png)
 
@@ -401,7 +407,7 @@ Shellcode是一组程序集指令，在执行这些指令时，执行攻击者�
 
 ![image.png](https://cdn.nlark.com/yuque/0/2020/png/2398693/1605363245978-adc014ea-8e99-477a-afc1-2d81e1e2f88f.png)
 
-也就是说我们发送的请求包中Content-Length和实际的不相符，经过我的实践，我发现是python版本的问题，如果选用python3，socket的send方法会要求你发送的是一个byte类型的数组，所以需要调用字符串的encode()方法进行编码，然后就导致了这个发送字节长度和服务器判断实际长度的不符，用python2就不会有这个问题，相对应，socket的send方法直接发送字符串即可。我下面是测试的比较正常的字符，没有问题，但是0x80及以后的就都会有问题：
+也就是说我们发送的请求包中Content-Length和实际的不相符，经过我的实践，我发现是python版本的问题，如果选用python3，socket的send方法会要求你发送的是一个byte类型的数组，所以需要调用字符串的encode()方法进行编码，然后就导致了这个发送字节长度和服务器判断实际长度的不符，用python2就不会有这个问题，相对应，socket的send方法直接发送字符串即可。我下面是测试的比较正常的字符，没有传输问题，但是0x80及以后的就都会有问题，我建议你使用pyhton2进行测试0x00-0xff：
 
 ![image.png](https://cdn.nlark.com/yuque/0/2020/png/2398693/1605365954922-3a7f562b-97ee-49f8-878e-ff82522af47d.png)
 
