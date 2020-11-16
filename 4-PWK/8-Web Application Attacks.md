@@ -76,3 +76,47 @@ Web服务器软件
 ### SQL注入
 
 [详情请点击](https://www.yuque.com/soft98/websec/kqnm7l)
+
+## 扩展你的技能
+
+Kali包含了几个可以创建HTTP服务器的工具。如果我们需要在任意端口上快速建立HTTP服务器，这尤其有用。
+
+### python
+
+我们可以在任意端口上启动HTTP服务器。通过python 2.x设置-m SimpleHTTPServer所需的模块和7331设置TCP端口:
+
+```
+python -m SimpleHTTPServer 7331
+```
+
+语法上python3.x 模块名是不同的:
+
+```
+python3 -m http.server 7331
+```
+
+这两个命令将启动一个HTTP服务器，并托管当前工作路径中的任何文件或目录。
+
+### php
+
+PHP包含一个内置的web服务器，可以用-S标志启动，后面跟着要使用的地址和端口:
+
+```
+php -S 0.0.0.0:8000
+```
+
+### ruby
+
+我们还可以用Ruby“一行程序”启动HTTP服务器。该命令需要几个标志，包括-run来加载un.rb，它包含了常见Unix命令的替换，运行HTTP服务器的-e httpd，. 提供来自当前目录的内容，-p 9000设置TCP端口:
+
+```
+ruby -run -e http.d . -p 9000
+```
+
+### busybox
+
+我们还可以使用busybox，“嵌入式Linux的瑞士军刀”，以httpd为功能来运行HTTP服务器，-f交互式运行，-p 10000运行在TCP端口10000上:
+
+```
+busybox httpd -f -p 10000
+```
